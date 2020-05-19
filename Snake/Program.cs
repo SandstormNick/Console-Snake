@@ -10,12 +10,17 @@ namespace Snake
     {
         static void Main(string[] args)
         {
-            // The code provided will print ‘Hello World’ to the console.
-            // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
-            Console.WriteLine("Hello World!");
-            Console.ReadKey();
-
-            // Go to http://aka.ms/dotnet-get-started-console to continue learning how to build a console app! 
+            //Clean Slate
         }
     }
+
+    //TO DO:
+    //Created the needed classes:
+    // - Snake ->(Iterator pattern perhaps)
+    // - Fruit ->gets placed somewhere randomly on the field
+    // - Field -> th parameters that the snake can roam in
+    // - Game -> keeps track of the game status - points, if snake is still alive, etc, snake speed
+    //
+    // Objective 1: Get the field displaying correctly - consider taking user input to determine the dimensions
+
 }
