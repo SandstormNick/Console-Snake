@@ -15,5 +15,12 @@ namespace Snake
         {
             GameStatus = true;
         }
+
+        #region Methods
+        public bool GetGameStatus()
+        {
+            return GameStatus;
+        }
+        #endregion
     }
 }

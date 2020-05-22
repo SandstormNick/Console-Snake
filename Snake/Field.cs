@@ -10,33 +10,40 @@ namespace Snake
     class Field
     {
         private int FieldSize { get; set; }
+        private string TopBottomWallSymbol { get; set; }
+        private string SideWallSymbol { get; set; }
 
         public Field()
         {
             FieldSize = 30;
+            TopBottomWallSymbol = "*";
+            SideWallSymbol = "|";
         }
 
-        //Use something like this to create the playing field
-        //for (int i = 0; i< 40; i++)
-        //    {
-        //        for (int x = 0; x< 40; x++)
-        //        {
-        //            if (i == 0 || i == 39)
-        //            {
-        //                Console.Write("*");
-        //            }
-        //            if ((i > 0 && i< 39 && x == 0) || (i > 0 && i< 39 && x == 39))
-        //            {
-        //                Console.Write("|");
-        //            }
-        //            if (i > 0 && i< 39 && x> 0 && x< 39)
-        //            {
-        //                Console.Write(" ");
-        //            }
+        #region Methods
+        public void SetField()
+        {
+            for (int i = 0; i < 40; i++)
+            {
+                for (int x = 0; x < 40; x++)
+                {
+                    if (i == 0 || i == 39)
+                    {
+                        Console.Write(TopBottomWallSymbol);
+                    }
+                    if ((i > 0 && i < 39 && x == 0) || (i > 0 && i < 39 && x == 39))
+                    {
+                        Console.Write(SideWallSymbol);
+                    }
+                    if (i > 0 && i < 39 && x > 0 && x < 39)
+                    {
+                        Console.Write(" ");
+                    }
 
-        //        }
-        //        Console.WriteLine();
-        //    }
-        //    Console.ReadLine();
+                }
+                Console.WriteLine();
+            }
+        }
+        #endregion
     }
 }

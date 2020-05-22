@@ -10,7 +10,11 @@ namespace Snake
     {
         static void Main(string[] args)
         {
-            //Clean Slate
+            Field theField = new Field();
+            theField.SetField();
+
+
+            Console.ReadLine();
         }
     }
 

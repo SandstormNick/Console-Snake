@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snake
 {
+    //Have different types of fruit - make use of the template pattern
     class Fruit
     {
     }
