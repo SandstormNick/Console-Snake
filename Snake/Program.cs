@@ -16,14 +16,27 @@ namespace Snake
             ConsoleKeyInfo cs = new ConsoleKeyInfo();
 
             //---------------------------------
+            //Need to neaten this area up a bit
 
             Field theField = new Field();
+            Apple appleFruit = new Apple(theField.GetFieldSize());
             Game theGame = new Game();
             Snake snake = new Snake(new ConcreteStateDown());
             snake.Request();
             theField.SetField();
+
+            bool ifEaten = false; //temporary but make a plan so the fruit doesn't populate every iteration
+            //---------------------------------
+
             while (theGame.GetGameStatus() == true && cs.Key != ConsoleKey.Q)
             {
+                //temporary if statment
+                if (!ifEaten)
+                {
+                    appleFruit.CreateFruit();
+                    ifEaten = true;
+                }
+                
                 while (Console.KeyAvailable == false)
                 {
                     Thread.Sleep(300);
@@ -49,7 +62,8 @@ namespace Snake
     // - Game -> keeps track of the game status - points, if snake is still alive, etc, snake speed
     //
     //Set collision methods
-    //Create a fruit that generates randomly on the field
+    // -> if the snake hits the walls
+    // -> if the snake hits the fruit it should generate a new fruit and add some points to the total
 }
 
 

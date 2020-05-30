@@ -23,19 +23,19 @@ namespace Snake
         #region Methods
         public void SetField()
         {
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < FieldSize; i++)
             {
-                for (int x = 0; x < 40; x++)
+                for (int x = 0; x < FieldSize; x++)
                 {
-                    if (i == 0 || i == 39)
+                    if (i == 0 || i == (FieldSize - 1))
                     {
                         Console.Write(TopBottomWallSymbol);
                     }
-                    if ((i > 0 && i < 39 && x == 0) || (i > 0 && i < 39 && x == 39))
+                    if ((i > 0 && i < (FieldSize - 1) && x == 0) || (i > 0 && i < (FieldSize - 1) && x == (FieldSize - 1)))
                     {
                         Console.Write(SideWallSymbol);
                     }
-                    if (i > 0 && i < 39 && x > 0 && x < 39)
+                    if (i > 0 && i < FieldSize - 1 && x > 0 && x < (FieldSize - 1))
                     {
                         Console.Write(" ");
                     }
@@ -43,6 +43,11 @@ namespace Snake
                 }
                 Console.WriteLine();
             }
+        }
+
+        public int GetFieldSize()
+        {
+            return FieldSize;
         }
         #endregion
     }
