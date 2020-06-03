@@ -9,6 +9,8 @@ namespace Snake
     //The parameters that the snake can roam in
     class Field
     {
+        private const int InnerWall = 0;
+
         private int FieldSize { get; set; }
         private string TopBottomWallSymbol { get; set; }
         private string SideWallSymbol { get; set; }
@@ -48,6 +50,21 @@ namespace Snake
         public int GetFieldSize()
         {
             return FieldSize;
+        }
+
+        public bool DetectWallCollisions(int xPosition, int yPosition)
+        {
+            if (xPosition == InnerWall || yPosition == InnerWall)
+            {
+                return false;
+            }
+
+            if (xPosition == FieldSize - 1 || yPosition == FieldSize - 1)
+            {
+                return false;
+            }
+
+            return true;
         }
         #endregion
     }

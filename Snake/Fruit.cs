@@ -13,6 +13,7 @@ namespace Snake
         private string FruitIcon { get; set; }
         private int FruitPoints { get; set; }
         private ConsoleColor FruitColor { get; set; }
+        private bool IsEaten { get; set; }
 
         private int XPosition { get; set; }
         private int YPosition { get; set; }
@@ -21,6 +22,7 @@ namespace Snake
         public Fruit(int fieldSize)
         {
             FieldSize = fieldSize;
+            IsEaten = false;
         }
 
         public abstract string SetFruitIcon();
@@ -35,6 +37,11 @@ namespace Snake
             SetXPosition();
             SetYPosition();
             DrawFruit();
+        }
+
+        public int GetFruitPoints()
+        {
+            return FruitPoints;
         }
 
         public string GetFruitIcon()
@@ -78,6 +85,24 @@ namespace Snake
             Console.SetCursorPosition(GetYPosition(), GetXPosition());
             Console.Write(GetFruitIcon());
             Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        public void SetIsEaten(bool isEaten)
+        {
+            IsEaten = isEaten;
+        }
+
+        public bool GetIsEaten()
+        {
+            return IsEaten;
+        }
+
+        public void DetectFruitCollision(int snakeX, int snakeY)
+        {
+            if (snakeX == XPosition && snakeY == YPosition)
+            {
+                SetIsEaten(true);
+            }
         }
     }
 

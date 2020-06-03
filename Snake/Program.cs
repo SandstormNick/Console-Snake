@@ -19,35 +19,45 @@ namespace Snake
             //Need to neaten this area up a bit
 
             Field theField = new Field();
-            Apple appleFruit = new Apple(theField.GetFieldSize());
+            Fruit theFruit = new Apple(theField.GetFieldSize());
             Game theGame = new Game();
             Snake snake = new Snake(new ConcreteStateDown());
             snake.Request();
             theField.SetField();
+            theFruit.CreateFruit();
 
-            bool ifEaten = false; //temporary but make a plan so the fruit doesn't populate every iteration
+            //bool ifEaten = false; //temporary but make a plan so the fruit doesn't populate every iteration
             //---------------------------------
 
             while (theGame.GetGameStatus() == true && cs.Key != ConsoleKey.Q)
             {
-                //temporary if statment
-                if (!ifEaten)
+                if (theFruit.GetIsEaten())
                 {
-                    appleFruit.CreateFruit();
-                    ifEaten = true;
+                    theGame.SetGameScore(theFruit.GetFruitPoints());
+                    theFruit.CreateFruit();
+                    theFruit.SetIsEaten(false);
                 }
-                
-                while (Console.KeyAvailable == false)
+
+                theGame.DisplayGameScore();
+
+                while (Console.KeyAvailable == false && theGame.GetGameStatus() == true && theFruit.GetIsEaten() == false)
                 {
                     Thread.Sleep(300);
 
                     snake.Request();
+                    theGame.SetGameStatus(theField.DetectWallCollisions(snake.GetXPosition(), snake.GetYPosition()));
+                    theFruit.DetectFruitCollision(snake.GetXPosition(), snake.GetYPosition());
+                    theGame.DisplaySnakePosition(snake.GetXPosition(), snake.GetYPosition());
 
                     snake.DrawSnake();
 
                 }
-                cs = Console.ReadKey(true);
-                snake.ReadKeyInput(cs);
+                if (!theFruit.GetIsEaten())
+                {
+                    cs = Console.ReadKey(true);
+                    snake.ReadKeyInput(cs);
+                }
+                
             }
 
             
@@ -55,27 +65,15 @@ namespace Snake
     }
 
     //TO DO:
-    //Created the needed classes:
-    // - Snake ->(Iterator pattern perhaps)
-    // - Fruit ->gets placed somewhere randomly on the field
-    // - Field -> th parameters that the snake can roam in
-    // - Game -> keeps track of the game status - points, if snake is still alive, etc, snake speed
+    //Fruit:
+    //-->Generate some different fruit (say 2 more)
+    //--> Create an algorithm to switch between the fruits
+    //----> the more points heavy fruits should have a time limit on how long they can exist (nice to have) 
     //
-    //Set collision methods
-    // -> if the snake hits the walls
-    // -> if the snake hits the fruit it should generate a new fruit and add some points to the total
+    //Game:
+    //----> Welcome and End Screens (nice to have)
+    //--> Introduce a game speed that gets progressively faster with each fruit eaten
+    //
+    //Snake:
+    //-->Grow the snake (use arrays to keep track of each part of the snake)
 }
-
-
-//==================================================================================================
-//Code to help get user input while the game loop is running - can delete at a later stage
-
-//ConsoleKeyInfo cs = new ConsoleKeyInfo();
-//do
-//{
-//    Console.WriteLine("\nPress a key to display; " + "press the 'P' key to quit.");
-//    while (Console.KeyAvailable == false) Thread.Sleep(200);
-//    cs = Console.ReadKey(true);
-//    Console.WriteLine("You pressed the '{0}' key.", cs.Key);
-//}
-//while (cs.Key != ConsoleKey.Q);
