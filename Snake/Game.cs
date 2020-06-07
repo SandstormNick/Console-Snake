@@ -12,12 +12,14 @@ namespace Snake
         private bool GameStatus { get; set; }
         private int GameScore { get; set; }
         private int BiteCount { get; set; }
+        private int GameSpeed { get; set; } //in milli seconds
 
         public Game()
         {
             GameStatus = true;
             GameScore = 0;
             BiteCount = 0;
+            GameSpeed = 500;
         }
 
         #region Methods
@@ -62,6 +64,16 @@ namespace Snake
         public int GetBiteCount()
         {
             return BiteCount;
+        }
+
+        public void UpdateGameSpeed()
+        {
+            GameSpeed -= 100;
+        }
+
+        public int GetGameSpeed()
+        {
+            return GameSpeed;
         }
         #endregion
     }

@@ -36,6 +36,7 @@ namespace Snake
                     
                     if (theGame.GetBiteCount() % 5 == 0)
                     {
+                        theGame.UpdateGameSpeed();
                         theFruit = new Berry(theField.GetFieldSize());
                     }
                     else if (theGame.GetBiteCount() % 3 == 0)
@@ -55,7 +56,7 @@ namespace Snake
 
                 while (Console.KeyAvailable == false && theGame.GetGameStatus() == true && theFruit.GetIsEaten() == false)
                 {
-                    Thread.Sleep(300);
+                    Thread.Sleep(theGame.GetGameSpeed());
 
                     snake.Request();
                     theGame.SetGameStatus(theField.DetectWallCollisions(snake.GetXPosition(), snake.GetYPosition()));
@@ -83,8 +84,8 @@ namespace Snake
     //
     //Game:
     //----> Welcome and End Screens (nice to have)
-    //--> Introduce a game speed that gets progressively faster with each fruit eaten
+    //--> Update the speed only when berry is eaten
     //
     //Snake:
-    //-->Grow the snake (use arrays to keep track of each part of the snake)
+    //-->Grow the snake (use arrays/lists to keep track of each part of the snake)
 }
