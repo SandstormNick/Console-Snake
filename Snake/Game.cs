@@ -11,11 +11,13 @@ namespace Snake
     {
         private bool GameStatus { get; set; }
         private int GameScore { get; set; }
+        private int BiteCount { get; set; }
 
         public Game()
         {
             GameStatus = true;
             GameScore = 0;
+            BiteCount = 0;
         }
 
         #region Methods
@@ -50,6 +52,16 @@ namespace Snake
         public void SetGameScore(int points)
         {
             GameScore = GetGameScore() + points;
+        }
+
+        public void UpdateBiteCount()
+        {
+            BiteCount++;
+        }
+
+        public int GetBiteCount()
+        {
+            return BiteCount;
         }
         #endregion
     }

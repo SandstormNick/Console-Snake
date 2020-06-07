@@ -129,4 +129,50 @@ namespace Snake
             return 1;
         }
     }
+
+    public class Banana : Fruit
+    {
+        public Banana(int fieldSize) : base(fieldSize)
+        {
+
+        }
+
+        public override ConsoleColor SetFruitColor()
+        {
+            return ConsoleColor.DarkYellow;
+        }
+
+        public override string SetFruitIcon()
+        {
+            return "(";
+        }
+
+        public override int SetFruitPoints()
+        {
+            return 3;
+        }
+    }
+
+    public class Berry : Fruit
+    {
+        public Berry(int fieldSize) : base(fieldSize)
+        {
+
+        }
+
+        public override ConsoleColor SetFruitColor()
+        {
+            return ConsoleColor.Red;
+        }
+
+        public override string SetFruitIcon()
+        {
+            return "&";
+        }
+
+        public override int SetFruitPoints()
+        {
+            return 5;
+        }
+    }
 }

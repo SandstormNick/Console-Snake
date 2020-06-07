@@ -25,15 +25,28 @@ namespace Snake
             snake.Request();
             theField.SetField();
             theFruit.CreateFruit();
-
-            //bool ifEaten = false; //temporary but make a plan so the fruit doesn't populate every iteration
             //---------------------------------
 
             while (theGame.GetGameStatus() == true && cs.Key != ConsoleKey.Q)
             {
                 if (theFruit.GetIsEaten())
                 {
+                    theGame.UpdateBiteCount();
                     theGame.SetGameScore(theFruit.GetFruitPoints());
+                    
+                    if (theGame.GetBiteCount() % 5 == 0)
+                    {
+                        theFruit = new Berry(theField.GetFieldSize());
+                    }
+                    else if (theGame.GetBiteCount() % 3 == 0)
+                    {
+                        theFruit = new Banana(theField.GetFieldSize());
+                    }
+                    else
+                    {
+                        theFruit = new Apple(theField.GetFieldSize());
+                    }
+
                     theFruit.CreateFruit();
                     theFruit.SetIsEaten(false);
                 }
@@ -66,8 +79,6 @@ namespace Snake
 
     //TO DO:
     //Fruit:
-    //-->Generate some different fruit (say 2 more)
-    //--> Create an algorithm to switch between the fruits
     //----> the more points heavy fruits should have a time limit on how long they can exist (nice to have) 
     //
     //Game:
