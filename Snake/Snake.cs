@@ -16,6 +16,10 @@ namespace Snake
         private int PreviousYPosition { get; set; }
         private int PreviousXPosition { get; set; }
 
+        List<string> SnakeBody { get; set; }
+        List<int> SnakeBodyY { get; set; }
+        List<int> SnakeBodyX { get; set; }
+
         public Snake(StateBase state)
         {
             SnakeHead = ">";
@@ -23,6 +27,10 @@ namespace Snake
             YPosition = 1;
             PreviousXPosition = 1;
             PreviousYPosition = 1;
+
+            SnakeBody = new List<string>();
+            SnakeBodyY = new List<int>();
+            SnakeBodyX = new List<int>();
 
             _state = state;
         }
@@ -127,6 +135,23 @@ namespace Snake
             PreviousXPosition = currentX;
             PreviousYPosition = currentY;
         }
+
+        public void UpdateSnakeBody()
+        {
+            SnakeBody.Add("*");
+        }
+
+        public List<string> GetSnakeBody()
+        {
+            return SnakeBody;
+        }
+
+        //public void UpdateSnakeBodyPositions()
+        //{
+        //    SnakeBodyX.Add(PreviousXPosition);
+        //    SnakeBodyY.Add(PreviousYPosition);
+        //}
+
     }
 
     #region State Classes

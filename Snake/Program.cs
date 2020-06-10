@@ -31,6 +31,7 @@ namespace Snake
             {
                 if (theFruit.GetIsEaten())
                 {
+                    snake.UpdateSnakeBody();
                     theGame.UpdateBiteCount();
                     theGame.SetGameScore(theFruit.GetFruitPoints());
                     
