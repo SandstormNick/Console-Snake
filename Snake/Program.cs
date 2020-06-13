@@ -32,6 +32,7 @@ namespace Snake
                 if (theFruit.GetIsEaten())
                 {
                     snake.UpdateSnakeBody();
+                    snake.AddSnakeBodyPositions();
                     theGame.UpdateBiteCount();
                     theGame.SetGameScore(theFruit.GetFruitPoints());
                     
@@ -64,6 +65,7 @@ namespace Snake
                     theFruit.DetectFruitCollision(snake.GetXPosition(), snake.GetYPosition());
                     theGame.DisplaySnakePosition(snake.GetXPosition(), snake.GetYPosition());
 
+                    snake.UpdateSnakeBodyPositions();
                     snake.DrawSnake();
 
                 }
