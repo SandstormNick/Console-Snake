@@ -31,8 +31,8 @@ namespace Snake
             {
                 if (theFruit.GetIsEaten())
                 {
-                    snake.UpdateSnakeBody();
-                    snake.AddSnakeBodyPositions();
+                    snake.AddSnakeBody();
+                    snake.UpdateAddToBody();
                     theGame.UpdateBiteCount();
                     theGame.SetGameScore(theFruit.GetFruitPoints());
                     
@@ -55,6 +55,7 @@ namespace Snake
                 }
 
                 theGame.DisplayGameScore();
+                snake.DisplaySnakeBodyCount(); //can be removed later
 
                 while (Console.KeyAvailable == false && theGame.GetGameStatus() == true && theFruit.GetIsEaten() == false)
                 {
@@ -64,10 +65,8 @@ namespace Snake
                     theGame.SetGameStatus(theField.DetectWallCollisions(snake.GetXPosition(), snake.GetYPosition()));
                     theFruit.DetectFruitCollision(snake.GetXPosition(), snake.GetYPosition());
                     theGame.DisplaySnakePosition(snake.GetXPosition(), snake.GetYPosition());
-
-                    snake.UpdateSnakeBodyPositions();
+                
                     snake.DrawSnake();
-
                 }
                 if (!theFruit.GetIsEaten())
                 {
@@ -83,12 +82,16 @@ namespace Snake
 
     //TO DO:
     //Fruit:
-    //----> the more points heavy fruits should have a time limit on how long they can exist (nice to have) 
+    //----> the more points heavy fruits should have a time limit on how long they can exist (nice to have)
+    //--> the fruit must not show up anywhere in the body or head of the snake
     //
     //Game:
     //----> Welcome and End Screens (nice to have)
-    //--> Update the speed only when berry is eaten
+    //--> Update the speed only when berry is eaten (the red fruit)
+    //--> Create snake body collision detection
     //
     //Snake:
-    //-->Grow the snake (use arrays/lists to keep track of each part of the snake)
+    //
+    //Field:
+    //--> Maybe smallen the field (30 by 30 might be a bit large)
 }

@@ -16,12 +16,13 @@ namespace Snake
         private int PreviousYPosition { get; set; }
         private int PreviousXPosition { get; set; }
 
-        private int LastBodyXPosition { get; set; }
-        private int LastBodyYPosition { get; set; }
+        private bool AddToBody { get; set; }
 
         List<string> SnakeBody { get; set; }
         List<int> SnakeBodyY { get; set; }
         List<int> SnakeBodyX { get; set; }
+        static List<int> PreviousBodyXPositions { get; set; }
+        static List<int> PreviousBodyYPositions { get; set; }
 
         public Snake(StateBase state)
         {
@@ -30,12 +31,13 @@ namespace Snake
             YPosition = 1;
             PreviousXPosition = 1;
             PreviousYPosition = 1;
-            LastBodyXPosition = 0;
-            LastBodyYPosition = 0;
+            AddToBody = false;
 
             SnakeBody = new List<string>();
             SnakeBodyY = new List<int>();
             SnakeBodyX = new List<int>();
+            PreviousBodyXPositions = new List<int>();
+            PreviousBodyYPositions = new List<int>();
 
             _state = state;
         }
@@ -51,7 +53,35 @@ namespace Snake
             _state.UpdatePreviousCoordinates(this);
             _state.Handle(this);
             _state.UpdateSnakeHead(this);
-            SetLastBodyCoordintates();
+
+            if (SnakeBody.Count > 0 && AddToBody == false)
+            {
+                SetPreviousBodyPositions();
+                UpdateSnakeBodyPositions();
+            }
+
+            if (SnakeBody.Count > 0 && AddToBody == true)
+            {
+                SetPreviousBodyPositions();
+                if (SnakeBodyX.Count > 0)
+                {
+                    UpdateSnakeBodyPositions();
+                }
+                AddSnakeBodyPositions();
+                UpdateAddToBody();
+            }
+        }
+
+        public void UpdateAddToBody()
+        {
+            if (AddToBody == false)
+            {
+                AddToBody = true;
+            }
+            else
+            {
+                AddToBody = false;
+            }
         }
 
         public void ReadKeyInput(ConsoleKeyInfo keyPressed)
@@ -81,18 +111,17 @@ namespace Snake
             Console.SetCursorPosition(GetYPosition(), GetXPosition());
             Console.Write(GetSnakeHead());
 
+            for (int i = 0; i < PreviousBodyXPositions.Count(); i++)
+            {
+                Console.SetCursorPosition(PreviousBodyYPositions[i], PreviousBodyXPositions[i]);
+                Console.Write(" ");
+            }
+
             for (int i = 0; i < SnakeBody.Count(); i++)
             {
                 Console.SetCursorPosition(SnakeBodyY[i], SnakeBodyX[i]);
                 Console.Write(SnakeBody[i]);
             }
-
-            if (SnakeBody.Count > 0)
-            {
-                Console.SetCursorPosition(LastBodyYPosition, LastBodyXPosition);
-                Console.Write(" ");
-            }
-            
         }
 
         public void SetSnakeHead(string value)
@@ -155,9 +184,21 @@ namespace Snake
             PreviousYPosition = currentY;
         }
 
-        public void UpdateSnakeBody()
+        public void SetPreviousBodyPositions()
+        {
+            PreviousBodyXPositions = new List<int>(SnakeBodyX);
+            PreviousBodyYPositions = new List<int>(SnakeBodyY);
+        }
+
+        public void AddSnakeBody()
         {
             SnakeBody.Add("*");
+        }
+
+        public void DisplaySnakeBodyCount()
+        {
+            Console.SetCursorPosition(0, 34);
+            Console.Write("Snake Body: {0}", SnakeBody.Count);
         }
 
         public List<string> GetSnakeBody()
@@ -167,39 +208,30 @@ namespace Snake
 
         public void AddSnakeBodyPositions()
         {
-            SnakeBodyX.Add(0);
-            SnakeBodyY.Add(0);
+            if(SnakeBody.Count == 1)
+            {
+                SnakeBodyX.Add(PreviousXPosition);
+                SnakeBodyY.Add(PreviousYPosition);
+            }
+            else
+            {
+                SnakeBodyX.Add(PreviousBodyXPositions.Last());
+                SnakeBodyY.Add(PreviousBodyYPositions.Last());
+            }
         }
 
         public void UpdateSnakeBodyPositions()
         {
-            int tempX = 0;
-            int tempY = 0;
-
             if (SnakeBody.Count > 0)
             {
-                tempX = SnakeBodyX[0];
-                tempY = SnakeBodyY[0];
                 SnakeBodyX[0] = PreviousXPosition;
                 SnakeBodyY[0] = PreviousYPosition;
             }
 
-            for (int i = 1; i < SnakeBody.Count(); i++)
+            for (int i = SnakeBodyX.Count() - 1; i > 0; i--)
             {
-                SnakeBodyX[i] = tempX;
-                SnakeBodyY[i] = tempY;
-
-                tempX = SnakeBodyY[i];
-                tempY = SnakeBodyY[i];
-            }
-        }
-
-        public void SetLastBodyCoordintates()
-        {
-            if (SnakeBody.Count > 0)
-            {
-                LastBodyXPosition = SnakeBodyX.Last();
-                LastBodyYPosition = SnakeBodyY.Last();
+                SnakeBodyX[i] = PreviousBodyXPositions[i - 1];
+                SnakeBodyY[i] = PreviousBodyYPositions[i - 1];
             }
         }
     }
