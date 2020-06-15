@@ -31,6 +31,7 @@ namespace Snake
             {
                 if (theFruit.GetIsEaten())
                 {
+                    theGame.UpdateGameSpeed(theFruit.UpdateSpeed);
                     snake.AddSnakeBody();
                     snake.UpdateAddToBody();
                     theGame.UpdateBiteCount();
@@ -38,7 +39,6 @@ namespace Snake
                     
                     if (theGame.GetBiteCount() % 5 == 0)
                     {
-                        theGame.UpdateGameSpeed();
                         theFruit = new Berry(theField.GetFieldSize());
                     }
                     else if (theGame.GetBiteCount() % 3 == 0)
@@ -87,7 +87,6 @@ namespace Snake
     //
     //Game:
     //----> Welcome and End Screens (nice to have)
-    //--> Update the speed only when berry is eaten (the red fruit)
     //--> Create snake body collision detection
     //
     //Snake:

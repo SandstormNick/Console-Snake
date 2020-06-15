@@ -66,9 +66,12 @@ namespace Snake
             return BiteCount;
         }
 
-        public void UpdateGameSpeed()
+        public void UpdateGameSpeed(bool update)
         {
-            GameSpeed -= 100;
+            if (update == true && GameSpeed > 100)
+            {
+                GameSpeed -= 100;
+            }
         }
 
         public int GetGameSpeed()
