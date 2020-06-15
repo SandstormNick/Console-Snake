@@ -17,7 +17,7 @@ namespace Snake
 
         public Field()
         {
-            FieldSize = 30;
+            FieldSize = 25;
             TopBottomWallSymbol = "*";
             SideWallSymbol = "|";
         }
