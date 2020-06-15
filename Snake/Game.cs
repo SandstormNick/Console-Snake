@@ -13,13 +13,15 @@ namespace Snake
         private int GameScore { get; set; }
         private int BiteCount { get; set; }
         private int GameSpeed { get; set; } //in milli seconds
+        private int MetaDataBeginPoint { get; set; }
 
-        public Game()
+        public Game(int fieldSize)
         {
             GameStatus = true;
             GameScore = 0;
             BiteCount = 0;
             GameSpeed = 500;
+            MetaDataBeginPoint = fieldSize + 3;
         }
 
         #region Methods
@@ -35,15 +37,21 @@ namespace Snake
 
         public void DisplaySnakePosition(int xPosition, int yPosition)
         {
-            Console.SetCursorPosition(0, 35);
+            Console.SetCursorPosition(0, MetaDataBeginPoint + 2);
             Console.WriteLine("X Position: {0}_", xPosition);
             Console.Write("Y Position: {0}_", yPosition);
         }
 
         public void DisplayGameScore()
         {
-            Console.SetCursorPosition(0, 33);
+            Console.SetCursorPosition(0, MetaDataBeginPoint);
             Console.Write("Game Score: {0}", GameScore);
+        }
+
+        public void DisplaySnakeBodyCount(int snakeBody)
+        {
+            Console.SetCursorPosition(0, MetaDataBeginPoint + 1);
+            Console.Write("Snake Body: {0}", snakeBody);
         }
 
         public int GetGameScore()

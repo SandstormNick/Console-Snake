@@ -20,7 +20,7 @@ namespace Snake
 
             Field theField = new Field();
             Fruit theFruit = new Apple(theField.GetFieldSize());
-            Game theGame = new Game();
+            Game theGame = new Game(theField.GetFieldSize());
             Snake snake = new Snake(new ConcreteStateDown());
             snake.Request();
             theField.SetField();
@@ -31,7 +31,7 @@ namespace Snake
             {
                 if (theFruit.GetIsEaten())
                 {
-                    theGame.UpdateGameSpeed(theFruit.UpdateSpeed);
+                    theGame.UpdateGameSpeed(theFruit.GetUpdateSpeed());
                     snake.AddSnakeBody();
                     snake.UpdateAddToBody();
                     theGame.UpdateBiteCount();
@@ -55,7 +55,7 @@ namespace Snake
                 }
 
                 theGame.DisplayGameScore();
-                snake.DisplaySnakeBodyCount(); //can be removed later
+                theGame.DisplaySnakeBodyCount(snake.GetSnakeBodyCount()); //can be removed later
 
                 while (Console.KeyAvailable == false && theGame.GetGameStatus() == true && theFruit.GetIsEaten() == false)
                 {
@@ -92,5 +92,5 @@ namespace Snake
     //Snake:
     //
     //Field:
-    //--> Maybe smallen the field (30 by 30 might be a bit large)
+    //
 }

@@ -195,10 +195,9 @@ namespace Snake
             SnakeBody.Add("*");
         }
 
-        public void DisplaySnakeBodyCount()
+        public int GetSnakeBodyCount()
         {
-            Console.SetCursorPosition(0, 34);
-            Console.Write("Snake Body: {0}", SnakeBody.Count);
+            return SnakeBody.Count;
         }
 
         public List<string> GetSnakeBody()

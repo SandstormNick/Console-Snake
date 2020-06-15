@@ -14,7 +14,7 @@ namespace Snake
         private int FruitPoints { get; set; }
         private ConsoleColor FruitColor { get; set; }
         private bool IsEaten { get; set; }
-        public bool UpdateSpeed { get; set; }
+        private bool UpdateSpeed { get; set; }
 
         private int XPosition { get; set; }
         private int YPosition { get; set; }
@@ -106,6 +106,16 @@ namespace Snake
                 SetIsEaten(true);
             }
         }
+
+        public void SetUpdateSpeed(bool update)
+        {
+            UpdateSpeed = update;
+        }
+
+        public bool GetUpdateSpeed()
+        {
+            return UpdateSpeed;
+        }
     }
 
     public class Apple : Fruit
@@ -159,7 +169,7 @@ namespace Snake
     {
         public Berry(int fieldSize) : base(fieldSize)
         {
-            UpdateSpeed = true;
+            SetUpdateSpeed(true);
         }
 
         public override ConsoleColor SetFruitColor()
