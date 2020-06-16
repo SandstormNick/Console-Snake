@@ -12,7 +12,6 @@ namespace Snake
         static void Main(string[] args)
         {
             //---------------------------------
-
             ConsoleKeyInfo cs = new ConsoleKeyInfo();
 
             //---------------------------------
@@ -22,6 +21,9 @@ namespace Snake
             Fruit theFruit = new Apple(theField.GetFieldSize());
             Game theGame = new Game(theField.GetFieldSize());
             Snake snake = new Snake(new ConcreteStateDown());
+
+            theGame.DisplayWelcome();
+
             snake.Request();
             theField.SetField();
             theFruit.CreateFruit();
@@ -76,21 +78,23 @@ namespace Snake
                 
             }
 
-            
+            theGame.DisplayEnd();
         }
     }
 
     //TO DO:
+    //Freeze anymore adjustments...
     //Fruit:
-    //----> the more points heavy fruits should have a time limit on how long they can exist (nice to have)
-    //--> the fruit must not show up anywhere in the body or head of the snake
+    //-->(5) the more points heavy fruits should have a time limit on how long they can exist (nice to have)
+    //-->(4) the fruit must not show up anywhere in the body or head of the snake
     //
     //Game:
-    //----> Welcome and End Screens (nice to have)
-    //--> Create snake body collision detection
+    //-->(3) Create snake body collision detection
+    //-->(1) ability to restart the game when you die
     //
     //Snake:
-    //
-    //Field:
-    //
+    //-->(2) prevent the snake from going backwards on itself (if its going up it can't go down, the same with sideways movements)
+
+    //FUTURE ADDITIONS:
+    //--> add the ability for the snake to go through the walls (user decides this via input in the beginning)
 }
