@@ -23,6 +23,7 @@ namespace Snake
         List<int> SnakeBodyX { get; set; }
         static List<int> PreviousBodyXPositions { get; set; }
         static List<int> PreviousBodyYPositions { get; set; }
+        private string SnakeDirection { get; set; }
 
         public Snake(StateBase state)
         {
@@ -32,6 +33,7 @@ namespace Snake
             PreviousXPosition = 1;
             PreviousYPosition = 1;
             AddToBody = false;
+            SnakeDirection = "DOWN";
 
             SnakeBody = new List<string>();
             SnakeBodyY = new List<int>();
@@ -52,6 +54,7 @@ namespace Snake
                 PreviousXPosition = 1;
                 PreviousYPosition = 1;
                 AddToBody = false;
+                SnakeDirection = "DOWN";
 
                 SnakeBody = new List<string>();
                 SnakeBodyY = new List<int>();
@@ -72,6 +75,7 @@ namespace Snake
         public void Request()
         {
             _state.UpdatePreviousCoordinates(this);
+            _state.UpdateSnakeDirection(this);
             _state.Handle(this);
             _state.UpdateSnakeHead(this);
 
@@ -110,16 +114,28 @@ namespace Snake
             switch (keyPressed.Key)
             {
                 case ConsoleKey.W:
-                    _state = new ConcreteStateUp();
+                    if (SnakeDirection != "DOWN")
+                    {
+                        _state = new ConcreteStateUp();
+                    }
                     break;
                 case ConsoleKey.S:
-                    _state = new ConcreteStateDown();
+                    if (SnakeDirection != "UP")
+                    {
+                        _state = new ConcreteStateDown();
+                    }
                     break;
                 case ConsoleKey.D:
-                    _state = new ConcreteStateRight();
+                    if (SnakeDirection != "LEFT")
+                    {
+                        _state = new ConcreteStateRight();
+                    }
                     break;
                 case ConsoleKey.A:
-                    _state = new ConcreteStateLeft();
+                    if (SnakeDirection != "RIGHT")
+                    {
+                        _state = new ConcreteStateLeft();
+                    }
                     break;
             }
         }
@@ -263,6 +279,11 @@ namespace Snake
                 Console.Write(" ");
             }
         }
+
+        public void SetSnakeDirection(string direction)
+        {
+            SnakeDirection = direction;
+        }
     }
 
     #region State Classes
@@ -271,6 +292,7 @@ namespace Snake
         public abstract void Handle(Snake snake);
         public abstract void UpdateSnakeHead(Snake snake);
         public abstract void UpdatePreviousCoordinates(Snake snake);
+        public abstract void UpdateSnakeDirection(Snake snake);
     }
 
     public class ConcreteStateDown : StateBase
@@ -292,6 +314,10 @@ namespace Snake
             snake.SetSnakeHead("V");
         }
 
+        public override void UpdateSnakeDirection(Snake snake)
+        {
+            snake.SetSnakeDirection("DOWN");
+        }
     }
 
     public class ConcreteStateUp : StateBase
@@ -310,6 +336,11 @@ namespace Snake
         public override void UpdateSnakeHead(Snake snake)
         {
             snake.SetSnakeHead("^");
+        }
+
+        public override void UpdateSnakeDirection(Snake snake)
+        {
+            snake.SetSnakeDirection("UP");
         }
     }
 
@@ -330,6 +361,11 @@ namespace Snake
         {
             snake.SetSnakeHead(">");
         }
+
+        public override void UpdateSnakeDirection(Snake snake)
+        {
+            snake.SetSnakeDirection("RIGHT");
+        }
     }
 
     public class ConcreteStateLeft : StateBase
@@ -348,6 +384,11 @@ namespace Snake
         public override void UpdateSnakeHead(Snake snake)
         {
             snake.SetSnakeHead("<");
+        }
+
+        public override void UpdateSnakeDirection(Snake snake)
+        {
+            snake.SetSnakeDirection("LEFT");
         }
     }
     #endregion
