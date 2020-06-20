@@ -11,7 +11,8 @@ namespace Snake
     class Game
     {
         const string SnakeWelcome = "Welcome to Ssssnake";
-        const string SnakeEnd = "The Snake died. Ssssanks for playing";
+        const string ReplayMessage = "The Snake died. Press Y to play again.";
+        const string SnakeEnd = "Ssssanks for playing";
 
         private List<ConsoleColor> WelcomeColors { get; set; }
         private bool GameStatus { get; set; }
@@ -22,6 +23,7 @@ namespace Snake
         private int MetaDataBodyCount { get; set; }
         private int MetaDataSnakePosition { get; set; }
         private int FieldSize { get; set; }
+        private bool Reset { get; set; }
 
         public Game(int fieldSize)
         {
@@ -38,6 +40,20 @@ namespace Snake
         }
 
         #region Methods
+        public void ResetGame()
+        {
+            Reset = true;
+            GameStatus = true;
+            GameScore = 0;
+            BiteCount = 0;
+            GameSpeed = 500;
+        }
+
+        public bool GetReset()
+        {
+            return Reset;
+        }
+
         public bool GetGameStatus()
         {
             return GameStatus;
@@ -122,6 +138,24 @@ namespace Snake
             }
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Clear();
+        }
+
+        public void DisplayReplayMessage()
+        {
+            Console.SetCursorPosition(FieldSize, 0);
+            Console.Write(ReplayMessage);
+        }
+
+        public void GetReplayResponse()
+        {
+            string userResponse = Console.ReadLine().ToUpper();
+            if (userResponse == "Y")
+            {
+                ResetGame();
+            }
+
+            Console.SetCursorPosition(FieldSize, 0);
+            Console.Write(new string(' ', ReplayMessage.Count() + 1));
         }
 
         public void DisplayEnd()

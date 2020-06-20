@@ -42,6 +42,27 @@ namespace Snake
             _state = state;
         }
 
+        public void ResetSnake(ConcreteStateDown state, bool reset)
+        {
+            if (reset)
+            {
+                SnakeHead = ">";
+                XPosition = 1;
+                YPosition = 1;
+                PreviousXPosition = 1;
+                PreviousYPosition = 1;
+                AddToBody = false;
+
+                SnakeBody = new List<string>();
+                SnakeBodyY = new List<int>();
+                SnakeBodyX = new List<int>();
+                PreviousBodyXPositions = new List<int>();
+                PreviousBodyYPositions = new List<int>();
+
+                _state = state;
+            }
+        }
+
         public StateBase State
         {
             get { return _state; }

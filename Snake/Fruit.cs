@@ -116,6 +116,11 @@ namespace Snake
         {
             return UpdateSpeed;
         }
+
+        public void RemoveOldFruit()
+        {
+            //remove the old fruit if the game is restarted
+        }
     }
 
     public class Apple : Fruit
