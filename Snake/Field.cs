@@ -74,7 +74,7 @@ namespace Snake
                 Console.SetCursorPosition(yPos, xPos);
                 Console.Write("*");
             }
-            else
+            else if (yPos == 0 || yPos == (FieldSize - 1))
             {
                 Console.SetCursorPosition(yPos, xPos);
                 Console.Write("|");

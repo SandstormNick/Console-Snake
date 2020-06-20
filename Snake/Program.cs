@@ -64,7 +64,7 @@ namespace Snake
                     Thread.Sleep(theGame.GetGameSpeed());
 
                     snake.Request();
-                    theGame.SetGameStatus(theField.DetectWallCollisions(snake.GetXPosition(), snake.GetYPosition()));
+                    theGame.SetGameStatus(theField.DetectWallCollisions(snake.GetXPosition(), snake.GetYPosition()), snake.DetectBodyCollision());
                     theFruit.DetectFruitCollision(snake.GetXPosition(), snake.GetYPosition());
                     theGame.DisplaySnakePosition(snake.GetXPosition(), snake.GetYPosition());
                 
@@ -103,11 +103,9 @@ namespace Snake
     //-->(5) the more points heavy fruits should have a time limit on how long they can exist (nice to have)
     //-->(4) the fruit must not show up anywhere in the body or head of the snake
     //
-    //Game:
-    //-->(3) Create snake body collision detection
-    //
-    //Snake:
-    //-->(2) prevent the snake from going backwards on itself (if its going up it can't go down, the same with sideways movements)
+    //Final:
+    //--> (6) Refactor Code
+
 
     //FUTURE ADDITIONS:
     //--> add the ability for the snake to go through the walls (user decides this via input in the beginning)

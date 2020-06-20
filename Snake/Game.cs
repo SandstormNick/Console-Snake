@@ -59,9 +59,16 @@ namespace Snake
             return GameStatus;
         }
 
-        public void SetGameStatus(bool gameStatus)
+        public void SetGameStatus(bool wallCollision, bool snakeCollision)
         {
-            GameStatus = gameStatus;
+            if (!wallCollision || !snakeCollision)
+            {
+                GameStatus = false;
+            }
+            else
+            {
+                GameStatus = true;
+            }
         }
 
         public void DisplaySnakePosition(int xPosition, int yPosition)

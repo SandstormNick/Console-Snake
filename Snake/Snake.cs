@@ -284,6 +284,19 @@ namespace Snake
         {
             SnakeDirection = direction;
         }
+
+        public bool DetectBodyCollision()
+        {
+            for (int i = 0; i < SnakeBody.Count(); i++)
+            {
+                if (XPosition == SnakeBodyX[i] && YPosition == SnakeBodyY[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 
     #region State Classes
