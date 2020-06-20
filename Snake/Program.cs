@@ -82,6 +82,10 @@ namespace Snake
                     theGame.GetReplayResponse();
                     if (theGame.GetReset())
                     {
+                        theFruit.RemoveOldFruit();
+                        snake.RemoveSnakeBody();
+                        theField.FixWall(snake.GetYPosition(), snake.GetXPosition());
+
                         snake.ResetSnake(new ConcreteStateDown(), theGame.GetReset());
                         theFruit = new Apple(theField.GetFieldSize());
                         theFruit.CreateFruit();
@@ -101,7 +105,6 @@ namespace Snake
     //
     //Game:
     //-->(3) Create snake body collision detection
-    //-->(1) ability to restart the game when you die -- Remove old fruit and snake if restarted
     //
     //Snake:
     //-->(2) prevent the snake from going backwards on itself (if its going up it can't go down, the same with sideways movements)

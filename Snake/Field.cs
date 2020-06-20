@@ -66,6 +66,20 @@ namespace Snake
 
             return true;
         }
+
+        public void FixWall(int yPos, int xPos)
+        {
+            if (xPos == 0 || xPos == (FieldSize - 1))
+            {
+                Console.SetCursorPosition(yPos, xPos);
+                Console.Write("*");
+            }
+            else
+            {
+                Console.SetCursorPosition(yPos, xPos);
+                Console.Write("|");
+            }
+        }
         #endregion
     }
 }

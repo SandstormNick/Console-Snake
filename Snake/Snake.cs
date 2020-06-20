@@ -254,6 +254,15 @@ namespace Snake
                 SnakeBodyY[i] = PreviousBodyYPositions[i - 1];
             }
         }
+
+        public void RemoveSnakeBody()
+        {
+            for (int i = 0; i < SnakeBody.Count(); i++)
+            {
+                Console.SetCursorPosition(SnakeBodyY[i], SnakeBodyX[i]);
+                Console.Write(" ");
+            }
+        }
     }
 
     #region State Classes

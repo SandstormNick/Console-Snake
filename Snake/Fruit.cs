@@ -119,7 +119,8 @@ namespace Snake
 
         public void RemoveOldFruit()
         {
-            //remove the old fruit if the game is restarted
+            Console.SetCursorPosition(YPosition, XPosition);
+            Console.Write(" ");
         }
     }
 
