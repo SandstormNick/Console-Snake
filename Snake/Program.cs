@@ -26,7 +26,7 @@ namespace Snake
 
             snake.Request();
             theField.SetField();
-            theFruit.CreateFruit();
+            theFruit.CreateFruit(snake.GetXPosition(), snake.GetYPosition(), snake.GetSnakeBodyX(), snake.GetSnakeBodyY());
             //---------------------------------
 
             while (theGame.GetGameStatus() == true && cs.Key != ConsoleKey.Q)
@@ -52,7 +52,7 @@ namespace Snake
                         theFruit = new Apple(theField.GetFieldSize());
                     }
 
-                    theFruit.CreateFruit();
+                    theFruit.CreateFruit(snake.GetXPosition(), snake.GetYPosition(), snake.GetSnakeBodyX(), snake.GetSnakeBodyY());
                     theFruit.SetIsEaten(false);
                 }
 
@@ -88,7 +88,7 @@ namespace Snake
 
                         snake.ResetSnake(new ConcreteStateDown(), theGame.GetReset());
                         theFruit = new Apple(theField.GetFieldSize());
-                        theFruit.CreateFruit();
+                        theFruit.CreateFruit(snake.GetXPosition(), snake.GetYPosition(), snake.GetSnakeBodyX(), snake.GetSnakeBodyY());
                     }
                 }
                 
@@ -101,10 +101,10 @@ namespace Snake
     //Freeze anymore adjustments...
     //Fruit:
     //-->(5) the more points heavy fruits should have a time limit on how long they can exist (nice to have)
-    //-->(4) the fruit must not show up anywhere in the body or head of the snake
     //
     //Final:
     //--> (6) Refactor Code
+    //--> Meta data remenants fix
 
 
     //FUTURE ADDITIONS:

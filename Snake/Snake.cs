@@ -297,6 +297,16 @@ namespace Snake
 
             return true;
         }
+
+        public List<int> GetSnakeBodyX()
+        {
+            return SnakeBodyX;
+        }
+
+        public List<int> GetSnakeBodyY()
+        {
+            return SnakeBodyY;
+        }
     }
 
     #region State Classes

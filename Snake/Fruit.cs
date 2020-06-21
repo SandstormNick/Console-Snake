@@ -15,6 +15,7 @@ namespace Snake
         private ConsoleColor FruitColor { get; set; }
         private bool IsEaten { get; set; }
         private bool UpdateSpeed { get; set; }
+        private bool FruitPositionIsGood { get; set; }
 
         private int XPosition { get; set; }
         private int YPosition { get; set; }
@@ -25,19 +26,25 @@ namespace Snake
             FieldSize = fieldSize;
             IsEaten = false;
             UpdateSpeed = false;
+            FruitPositionIsGood = false;
         }
 
         public abstract string SetFruitIcon();
         public abstract int SetFruitPoints();
         public abstract ConsoleColor SetFruitColor();
 
-        public void CreateFruit()
+        public void CreateFruit(int snakeHeadX, int snakeHeadY, List<int> snakeBodyX, List<int> snakeBodyY)
         {
+            FruitPositionIsGood = false;
             FruitIcon = SetFruitIcon();
             FruitPoints = SetFruitPoints();
             FruitColor = SetFruitColor();
-            SetXPosition();
-            SetYPosition();
+            while (!FruitPositionIsGood)
+            {
+                SetXPosition();
+                SetYPosition();
+                CheckFruitPosition(snakeHeadX, snakeHeadY, snakeBodyX, snakeBodyY);
+            }
             DrawFruit();
         }
 
@@ -79,6 +86,31 @@ namespace Snake
         public int GetYPosition()
         {
             return YPosition;
+        }
+
+        public void CheckFruitPosition(int snakeHeadX, int snakeHeadY, List<int> snakeBodyX, List<int> snakeBodyY)
+        {
+            bool noPositionClash = true;
+            if (XPosition == snakeHeadX && YPosition == snakeHeadY)
+            {
+                noPositionClash = false;
+            }
+            
+            if (noPositionClash == true)
+            {
+                for (int i = 0; i < snakeBodyX.Count(); i++)
+                {
+                    if (XPosition == snakeBodyX[i] && YPosition == snakeBodyY[i])
+                    {
+                        noPositionClash = false;
+                    }
+                }
+            }
+            
+            if (noPositionClash == true)
+            {
+                FruitPositionIsGood = true;
+            }
         }
 
         public void DrawFruit()
