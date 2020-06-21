@@ -104,7 +104,6 @@ namespace Snake
     //
     //Final:
     //--> (6) Refactor Code
-    //--> Meta data remenants fix
 
 
     //FUTURE ADDITIONS:

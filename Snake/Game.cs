@@ -74,20 +74,20 @@ namespace Snake
         public void DisplaySnakePosition(int xPosition, int yPosition)
         {
             Console.SetCursorPosition(0, MetaDataSnakePosition);
-            Console.WriteLine("{0}: X Position: {1}_", MetaDataSnakePosition, xPosition);
-            Console.Write("{0}: Y Position: {1}_", MetaDataSnakePosition + 1, yPosition);
+            Console.WriteLine("X Position: {0}   ", xPosition);
+            Console.Write("Y Position: {0}   ", yPosition);
         }
 
         public void DisplayGameScore()
         {
             Console.SetCursorPosition(0, MetaDataScore);
-            Console.WriteLine("{0}: Game Score: {1}", MetaDataScore, GameScore);
+            Console.WriteLine("Game Score: {0}   ", GameScore);
         }
 
         public void DisplaySnakeBodyCount(int snakeBody)
         {
             Console.SetCursorPosition(0, MetaDataBodyCount);
-            Console.WriteLine("{0}: Snake Body: {1}", MetaDataBodyCount, snakeBody);
+            Console.WriteLine("Snake Body: {0}   ", snakeBody);
         }
 
         public int GetGameScore()
