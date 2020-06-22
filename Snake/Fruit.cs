@@ -16,6 +16,8 @@ namespace Snake
         private bool IsEaten { get; set; }
         private bool UpdateSpeed { get; set; }
         private bool FruitPositionIsGood { get; set; }
+        private bool IsBerry { get; set; }
+        private int BerryMoves { get; set; }
 
         private int XPosition { get; set; }
         private int YPosition { get; set; }
@@ -151,8 +153,35 @@ namespace Snake
 
         public void RemoveOldFruit()
         {
+            SetUpdateSpeed(false);
+
             Console.SetCursorPosition(YPosition, XPosition);
             Console.Write(" ");
+        }
+
+        public void SetIsBerry(bool berry)
+        {
+            IsBerry = berry;
+        }
+
+        public bool GetIsBerry()
+        {
+            return IsBerry;
+        }
+
+        public void SetBerryMoves(int moves)
+        {
+            BerryMoves = moves;
+        }
+
+        public void UpdateBerryMoves()
+        {
+            BerryMoves--;
+        }
+
+        public int GetBerryMoves()
+        {
+            return BerryMoves;
         }
     }
 
@@ -161,7 +190,7 @@ namespace Snake
 
         public Apple(int fieldSize) : base(fieldSize)
         {
-
+            SetIsBerry(false);
         }
 
         public override ConsoleColor SetFruitColor()
@@ -184,7 +213,7 @@ namespace Snake
     {
         public Banana(int fieldSize) : base(fieldSize)
         {
-
+            SetIsBerry(false);
         }
 
         public override ConsoleColor SetFruitColor()
@@ -208,6 +237,8 @@ namespace Snake
         public Berry(int fieldSize) : base(fieldSize)
         {
             SetUpdateSpeed(true);
+            SetIsBerry(true);
+            SetBerryMoves(30);
         }
 
         public override ConsoleColor SetFruitColor()

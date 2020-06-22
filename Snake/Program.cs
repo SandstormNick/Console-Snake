@@ -57,7 +57,7 @@ namespace Snake
                 }
 
                 theGame.DisplayGameScore();
-                theGame.DisplaySnakeBodyCount(snake.GetSnakeBodyCount()); //can be removed later
+                theGame.DisplaySnakeBodyCount(snake.GetSnakeBodyCount());
 
                 while (Console.KeyAvailable == false && theGame.GetGameStatus() == true && theFruit.GetIsEaten() == false)
                 {
@@ -67,7 +67,18 @@ namespace Snake
                     theGame.SetGameStatus(theField.DetectWallCollisions(snake.GetXPosition(), snake.GetYPosition()), snake.DetectBodyCollision());
                     theFruit.DetectFruitCollision(snake.GetXPosition(), snake.GetYPosition());
                     theGame.DisplaySnakePosition(snake.GetXPosition(), snake.GetYPosition());
-                
+
+                    if (theFruit.GetIsBerry())
+                    {
+                        theFruit.UpdateBerryMoves();
+                        if (theFruit.GetBerryMoves() <= 0)
+                        {
+                            theFruit.RemoveOldFruit();
+                            theFruit = new Apple(theField.GetFieldSize());
+                            theFruit.CreateFruit(snake.GetXPosition(), snake.GetYPosition(), snake.GetSnakeBodyX(), snake.GetSnakeBodyY());
+                        }
+                    }
+
                     snake.DrawSnake();
                 }
                 if (!theFruit.GetIsEaten() && theGame.GetGameStatus())
@@ -99,8 +110,6 @@ namespace Snake
 
     //TO DO:
     //Freeze anymore adjustments...
-    //Fruit:
-    //-->(5) the more points heavy fruits should have a time limit on how long they can exist (nice to have)
     //
     //Final:
     //--> (6) Refactor Code
