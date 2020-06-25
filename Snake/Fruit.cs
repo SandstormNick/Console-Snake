@@ -9,10 +9,12 @@ namespace Snake
     //Have different types of fruit - make use of the template pattern
     public abstract class Fruit
     {
+        #region Properties
         static readonly Random random = new Random();
+
+        private ConsoleColor FruitColor { get; set; }
         private string FruitIcon { get; set; }
         private int FruitPoints { get; set; }
-        private ConsoleColor FruitColor { get; set; }
         private bool IsEaten { get; set; }
         private bool UpdateSpeed { get; set; }
         private bool FruitPositionIsGood { get; set; }
@@ -22,6 +24,7 @@ namespace Snake
         private int XPosition { get; set; }
         private int YPosition { get; set; }
         private int FieldSize { get; set; }
+        #endregion
 
         public Fruit(int fieldSize)
         {
@@ -31,10 +34,14 @@ namespace Snake
             FruitPositionIsGood = false;
         }
 
+        #region Methods Implemented in Concrete Fruit classes
         public abstract string SetFruitIcon();
         public abstract int SetFruitPoints();
         public abstract ConsoleColor SetFruitColor();
+        #endregion
 
+        #region Methods
+        //Template method to create all concrete Fruit instances
         public void CreateFruit(int snakeHeadX, int snakeHeadY, List<int> snakeBodyX, List<int> snakeBodyY)
         {
             FruitPositionIsGood = false;
@@ -48,6 +55,14 @@ namespace Snake
                 CheckFruitPosition(snakeHeadX, snakeHeadY, snakeBodyX, snakeBodyY);
             }
             DrawFruit();
+        }
+
+        public void DrawFruit()
+        {
+            Console.ForegroundColor = GetFruitColor();
+            Console.SetCursorPosition(GetYPosition(), GetXPosition());
+            Console.Write(GetFruitIcon());
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public int GetFruitPoints()
@@ -97,7 +112,7 @@ namespace Snake
             {
                 noPositionClash = false;
             }
-            
+
             if (noPositionClash == true)
             {
                 for (int i = 0; i < snakeBodyX.Count(); i++)
@@ -108,19 +123,11 @@ namespace Snake
                     }
                 }
             }
-            
+
             if (noPositionClash == true)
             {
                 FruitPositionIsGood = true;
             }
-        }
-
-        public void DrawFruit()
-        {
-            Console.ForegroundColor = GetFruitColor();
-            Console.SetCursorPosition(GetYPosition(), GetXPosition());
-            Console.Write(GetFruitIcon());
-            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public void SetIsEaten(bool isEaten)
@@ -183,8 +190,11 @@ namespace Snake
         {
             return BerryMoves;
         }
+        #endregion
+
     }
 
+    #region Concrete Fruit Classes
     public class Apple : Fruit
     {
 
@@ -256,4 +266,5 @@ namespace Snake
             return 5;
         }
     }
+    #endregion
 }

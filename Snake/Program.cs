@@ -11,11 +11,7 @@ namespace Snake
     {
         static void Main(string[] args)
         {
-            //---------------------------------
-            ConsoleKeyInfo cs = new ConsoleKeyInfo();
-
-            //---------------------------------
-            //Need to neaten this area up a bit
+            ConsoleKeyInfo cki = new ConsoleKeyInfo();
 
             Field theField = new Field();
             Fruit theFruit = new Apple(theField.GetFieldSize());
@@ -27,10 +23,11 @@ namespace Snake
             snake.Request();
             theField.SetField();
             theFruit.CreateFruit(snake.GetXPosition(), snake.GetYPosition(), snake.GetSnakeBodyX(), snake.GetSnakeBodyY());
-            //---------------------------------
 
-            while (theGame.GetGameStatus() == true && cs.Key != ConsoleKey.Q)
+            //main game play loop
+            while (theGame.GetGameStatus() == true && cki.Key != ConsoleKey.Q) //Q can quit while game is in play
             {
+                //if the Fruit has been eaten access this if block
                 if (theFruit.GetIsEaten())
                 {
                     theGame.UpdateGameSpeed(theFruit.GetUpdateSpeed());
@@ -56,11 +53,17 @@ namespace Snake
                     theFruit.SetIsEaten(false);
                 }
 
+                //meta data
                 theGame.DisplayGameScore();
                 theGame.DisplaySnakeBodyCount(snake.GetSnakeBodyCount());
 
+                //this while loop runs while a key HAS not been pressed &&
+                //the game status is still true meaning the snake has not died &&
+                //the fruit has not been eaten yet
                 while (Console.KeyAvailable == false && theGame.GetGameStatus() == true && theFruit.GetIsEaten() == false)
                 {
+                    //the game sleeps depending on the game speed
+                    //this is what produces the speed of the snake as it gets faster
                     Thread.Sleep(theGame.GetGameSpeed());
 
                     snake.Request();
@@ -68,6 +71,8 @@ namespace Snake
                     theFruit.DetectFruitCollision(snake.GetXPosition(), snake.GetYPosition());
                     theGame.DisplaySnakePosition(snake.GetXPosition(), snake.GetYPosition());
 
+                    //The Berry fruit has a time limit on it while the other fruits do not
+                    //therefore if it is a Berrt run this if block
                     if (theFruit.GetIsBerry())
                     {
                         theFruit.UpdateBerryMoves();
@@ -79,14 +84,20 @@ namespace Snake
                         }
                     }
 
+                    //with each iteration in this loop the snake must be drawn
                     snake.DrawSnake();
                 }
+                
+                //when the while loop is exited due to a key press, that key needs to be read
                 if (!theFruit.GetIsEaten() && theGame.GetGameStatus())
                 {
-                    cs = Console.ReadKey(true);
-                    snake.ReadKeyInput(cs);
+                    cki = Console.ReadKey(true);
+                    snake.ReadKeyInput(cki);
                 }
 
+                //if the Game Status is false meaning the snake has died
+                //give the user the choice of replaying
+                //if they choose to the game is reset
                 if (!theGame.GetGameStatus())
                 {
                     theGame.DisplayReplayMessage();
@@ -108,13 +119,8 @@ namespace Snake
         }
     }
 
-    //TO DO:
-    //Freeze anymore adjustments...
-    //
-    //Final:
-    //--> (6) Refactor Code
-
-
     //FUTURE ADDITIONS:
+    //Write score to file and keep track of high score, - notepad doc
+    //allow user to enter a player name, this can be written with the high score to the doc
     //--> add the ability for the snake to go through the walls (user decides this via input in the beginning)
 }

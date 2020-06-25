@@ -8,6 +8,7 @@ namespace Snake
 {
     public class Snake
     {
+        #region Properties
         private StateBase _state;
         private string SnakeHead { get; set; }
         private int XPosition { get; set; }
@@ -24,6 +25,13 @@ namespace Snake
         static List<int> PreviousBodyXPositions { get; set; }
         static List<int> PreviousBodyYPositions { get; set; }
         private string SnakeDirection { get; set; }
+
+        public StateBase State
+        {
+            get { return _state; }
+            set { _state = value; }
+        }
+        #endregion
 
         public Snake(StateBase state)
         {
@@ -44,34 +52,8 @@ namespace Snake
             _state = state;
         }
 
-        public void ResetSnake(ConcreteStateDown state, bool reset)
-        {
-            if (reset)
-            {
-                SnakeHead = ">";
-                XPosition = 1;
-                YPosition = 1;
-                PreviousXPosition = 1;
-                PreviousYPosition = 1;
-                AddToBody = false;
-                SnakeDirection = "DOWN";
-
-                SnakeBody = new List<string>();
-                SnakeBodyY = new List<int>();
-                SnakeBodyX = new List<int>();
-                PreviousBodyXPositions = new List<int>();
-                PreviousBodyYPositions = new List<int>();
-
-                _state = state;
-            }
-        }
-
-        public StateBase State
-        {
-            get { return _state; }
-            set { _state = value; }
-        }
-
+        #region Methods
+        //Method to set the State of the snake based on the key input
         public void Request()
         {
             _state.UpdatePreviousCoordinates(this);
@@ -94,18 +76,6 @@ namespace Snake
                 }
                 AddSnakeBodyPositions();
                 UpdateAddToBody();
-            }
-        }
-
-        public void UpdateAddToBody()
-        {
-            if (AddToBody == false)
-            {
-                AddToBody = true;
-            }
-            else
-            {
-                AddToBody = false;
             }
         }
 
@@ -140,30 +110,31 @@ namespace Snake
             }
         }
 
-        public void DrawSnake()
+        public void SetSnakeDirection(string direction)
         {
-            Console.SetCursorPosition(GetPreviousYPosition(), GetPreviousXPosition());
-            Console.Write(" ");
+            SnakeDirection = direction;
+        }
 
-            Console.SetCursorPosition(GetYPosition(), GetXPosition());
-            Console.Write(GetSnakeHead());
-
-            for (int i = 0; i < PreviousBodyXPositions.Count(); i++)
-            {
-                Console.SetCursorPosition(PreviousBodyYPositions[i], PreviousBodyXPositions[i]);
-                Console.Write(" ");
-            }
-
-            for (int i = 0; i < SnakeBody.Count(); i++)
-            {
-                Console.SetCursorPosition(SnakeBodyY[i], SnakeBodyX[i]);
-                Console.Write(SnakeBody[i]);
-            }
+        public string GetSnakeHead()
+        {
+            return SnakeHead;
         }
 
         public void SetSnakeHead(string value)
         {
             SnakeHead = value;
+        }
+
+        public void UpdateAddToBody()
+        {
+            if (AddToBody == false)
+            {
+                AddToBody = true;
+            }
+            else
+            {
+                AddToBody = false;
+            }
         }
 
         #region Get X and Y Coordinates
@@ -187,11 +158,6 @@ namespace Snake
             return PreviousXPosition;
         }
         #endregion
-
-        public string GetSnakeHead()
-        {
-            return SnakeHead;
-        }
 
         #region Move Coordinates
         public void MoveDown()
@@ -227,6 +193,7 @@ namespace Snake
             PreviousBodyYPositions = new List<int>(SnakeBodyY);
         }
 
+        #region Snake Body
         public void AddSnakeBody()
         {
             SnakeBody.Add("*");
@@ -244,7 +211,7 @@ namespace Snake
 
         public void AddSnakeBodyPositions()
         {
-            if(SnakeBody.Count == 1)
+            if (SnakeBody.Count == 1)
             {
                 SnakeBodyX.Add(PreviousXPosition);
                 SnakeBodyY.Add(PreviousYPosition);
@@ -271,6 +238,16 @@ namespace Snake
             }
         }
 
+        public List<int> GetSnakeBodyX()
+        {
+            return SnakeBodyX;
+        }
+
+        public List<int> GetSnakeBodyY()
+        {
+            return SnakeBodyY;
+        }
+
         public void RemoveSnakeBody()
         {
             for (int i = 0; i < SnakeBody.Count(); i++)
@@ -279,11 +256,7 @@ namespace Snake
                 Console.Write(" ");
             }
         }
-
-        public void SetSnakeDirection(string direction)
-        {
-            SnakeDirection = direction;
-        }
+        #endregion
 
         public bool DetectBodyCollision()
         {
@@ -298,15 +271,51 @@ namespace Snake
             return true;
         }
 
-        public List<int> GetSnakeBodyX()
+        public void DrawSnake()
         {
-            return SnakeBodyX;
+            Console.SetCursorPosition(GetPreviousYPosition(), GetPreviousXPosition());
+            Console.Write(" ");
+
+            Console.SetCursorPosition(GetYPosition(), GetXPosition());
+            Console.Write(GetSnakeHead());
+
+            for (int i = 0; i < PreviousBodyXPositions.Count(); i++)
+            {
+                Console.SetCursorPosition(PreviousBodyYPositions[i], PreviousBodyXPositions[i]);
+                Console.Write(" ");
+            }
+
+            for (int i = 0; i < SnakeBody.Count(); i++)
+            {
+                Console.SetCursorPosition(SnakeBodyY[i], SnakeBodyX[i]);
+                Console.Write(SnakeBody[i]);
+            }
         }
 
-        public List<int> GetSnakeBodyY()
+        public void ResetSnake(ConcreteStateDown state, bool reset)
         {
-            return SnakeBodyY;
+            if (reset)
+            {
+                SnakeHead = ">";
+                XPosition = 1;
+                YPosition = 1;
+                PreviousXPosition = 1;
+                PreviousYPosition = 1;
+                AddToBody = false;
+                SnakeDirection = "DOWN";
+
+                SnakeBody = new List<string>();
+                SnakeBodyY = new List<int>();
+                SnakeBodyX = new List<int>();
+                PreviousBodyXPositions = new List<int>();
+                PreviousBodyYPositions = new List<int>();
+
+                _state = state;
+            }
         }
+        
+        #endregion
+
     }
 
     #region State Classes

@@ -10,9 +10,10 @@ namespace Snake
     //keeps track of the game status and other game related data
     class Game
     {
-        const string SnakeWelcome = "Welcome to Ssssnake";
-        const string ReplayMessage = "The Snake died. Press Y to play again.";
-        const string SnakeEnd = "Ssssanks for playing";
+        #region Properties
+        const string SNAKE_WELCOME = "Welcome to Ssssnake";
+        const string REPLAY_MESSAGE = "The Snake died. Press Y to play again.";
+        const string SNAKE_END = "Ssssanks for playing";
 
         private List<ConsoleColor> WelcomeColors { get; set; }
         private bool GameStatus { get; set; }
@@ -24,6 +25,7 @@ namespace Snake
         private int MetaDataSnakePosition { get; set; }
         private int FieldSize { get; set; }
         private bool Reset { get; set; }
+        #endregion
 
         public Game(int fieldSize)
         {
@@ -71,25 +73,6 @@ namespace Snake
             }
         }
 
-        public void DisplaySnakePosition(int xPosition, int yPosition)
-        {
-            Console.SetCursorPosition(0, MetaDataSnakePosition);
-            Console.WriteLine("X Position: {0}   ", xPosition);
-            Console.Write("Y Position: {0}   ", yPosition);
-        }
-
-        public void DisplayGameScore()
-        {
-            Console.SetCursorPosition(0, MetaDataScore);
-            Console.WriteLine("Game Score: {0}   ", GameScore);
-        }
-
-        public void DisplaySnakeBodyCount(int snakeBody)
-        {
-            Console.SetCursorPosition(0, MetaDataBodyCount);
-            Console.WriteLine("Snake Body: {0}   ", snakeBody);
-        }
-
         public int GetGameScore()
         {
             return GameScore;
@@ -123,6 +106,27 @@ namespace Snake
             return GameSpeed;
         }
 
+        #region Meta Data during game play
+        public void DisplaySnakePosition(int xPosition, int yPosition)
+        {
+            Console.SetCursorPosition(0, MetaDataSnakePosition);
+            Console.WriteLine("X Position: {0}   ", xPosition);
+            Console.Write("Y Position: {0}   ", yPosition);
+        }
+
+        public void DisplayGameScore()
+        {
+            Console.SetCursorPosition(0, MetaDataScore);
+            Console.WriteLine("Game Score: {0}   ", GameScore);
+        }
+
+        public void DisplaySnakeBodyCount(int snakeBody)
+        {
+            Console.SetCursorPosition(0, MetaDataBodyCount);
+            Console.WriteLine("Snake Body: {0}   ", snakeBody);
+        }
+        #endregion
+
         public void DisplayWelcome()
         {
             int consoleColorIndex = 0;
@@ -130,7 +134,7 @@ namespace Snake
             {
                 Console.SetCursorPosition(i * 5, i);
                 Console.ForegroundColor = WelcomeColors[consoleColorIndex];
-                Console.Write(SnakeWelcome);
+                Console.Write(SNAKE_WELCOME);
                 Thread.Sleep(1000);
 
                 if (i == WelcomeColors.Count - 1)
@@ -150,7 +154,7 @@ namespace Snake
         public void DisplayReplayMessage()
         {
             Console.SetCursorPosition(FieldSize, 0);
-            Console.Write(ReplayMessage);
+            Console.Write(REPLAY_MESSAGE);
         }
 
         public void GetReplayResponse()
@@ -162,7 +166,7 @@ namespace Snake
             }
 
             Console.SetCursorPosition(FieldSize, 0);
-            Console.Write(new string(' ', ReplayMessage.Count() + 1));
+            Console.Write(new string(' ', REPLAY_MESSAGE.Count() + 1));
         }
 
         public void DisplayEnd()
@@ -173,12 +177,12 @@ namespace Snake
                 if (i > 0)
                 {
                     Console.SetCursorPosition(FieldSize, i -1);
-                    Console.Write(new string(' ', SnakeEnd.Count() + (i * 10)));
+                    Console.Write(new string(' ', SNAKE_END.Count() + (i * 10)));
                 }
 
                 Console.SetCursorPosition(FieldSize + (i * 5), i);
                 Console.ForegroundColor = WelcomeColors[consoleColorIndex];
-                Console.Write(SnakeEnd);
+                Console.Write(SNAKE_END);
                 Thread.Sleep(1000);
 
                 if (i == WelcomeColors.Count - 1)
